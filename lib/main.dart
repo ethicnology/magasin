@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Magasin - GitHub Release Fetcher',
+      title: 'Magasin',
       theme: AppTheme.darkTheme,
       home: BlocProvider(
         create: (context) {
