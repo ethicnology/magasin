@@ -38,9 +38,6 @@ class AssetsList extends StatelessWidget {
                     ? '${filteredAssets.length}/${assets.length}'
                     : '${assets.length}',
               ),
-              backgroundColor: isFiltered
-                  ? Colors.blue.shade100
-                  : Colors.grey.shade100,
             ),
           ],
         ),
@@ -48,17 +45,13 @@ class AssetsList extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             'Showing ${SupportedPlatformExtensions.current.displayName}-compatible files only',
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: Colors.grey.shade600),
+            style: Theme.of(context).textTheme.bodySmall,
           ),
         ] else ...[
           const SizedBox(height: 4),
           Text(
             'No ${SupportedPlatformExtensions.current.displayName}-specific files found, showing all assets',
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: Colors.grey.shade600),
+            style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
         const SizedBox(height: 8),
@@ -72,10 +65,7 @@ class AssetsList extends StatelessWidget {
 
             return Card(
               child: ListTile(
-                leading: Icon(
-                  asset.name.assetIcon,
-                  color: Colors.blue.shade600,
-                ),
+                leading: Icon(asset.name.assetIcon),
                 title: Text(asset.name),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

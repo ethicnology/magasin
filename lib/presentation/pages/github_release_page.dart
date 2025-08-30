@@ -11,10 +11,7 @@ class GitHubReleasePageNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('GitHub Release Fetcher'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
+      appBar: AppBar(title: const Text('GitHub Release Fetcher')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -30,7 +27,6 @@ class GitHubReleasePageNew extends StatelessWidget {
                       content: Text(
                         'Downloaded ${state.downloadingAssetName} successfully!',
                       ),
-                      backgroundColor: Colors.green,
                     ),
                   );
                 } else if (state.status ==
@@ -40,7 +36,6 @@ class GitHubReleasePageNew extends StatelessWidget {
                       content: Text(
                         'Failed to download: ${state.errorMessage}',
                       ),
-                      backgroundColor: Colors.red,
                     ),
                   );
                 }
@@ -53,12 +48,10 @@ class GitHubReleasePageNew extends StatelessWidget {
                     return const Center(child: CircularProgressIndicator());
                   case GitHubReleaseStatus.error:
                     return Card(
-                      color: Colors.red.shade50,
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: SelectableText(
                           state.errorMessage ?? 'Unknown error',
-                          style: TextStyle(color: Colors.red.shade700),
                         ),
                       ),
                     );
