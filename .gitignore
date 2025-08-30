@@ -33,6 +33,11 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Generated files
+*.g.dart
+*.mapper.dart
+*.freezed.dart
+
 # Symbolication related
 app.*.symbols
 
