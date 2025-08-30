@@ -103,10 +103,15 @@ class _GitHubReleasePageState extends State<GitHubReleasePage> {
                 children: [
                   TextFormField(
                     controller: _urlController,
+                    keyboardType: TextInputType.url,
+                    textInputAction: TextInputAction.done,
+                    enableSuggestions: true,
+                    autocorrect: false,
                     decoration: const InputDecoration(
                       labelText: 'GitHub Repository URL',
                       hintText: 'https://github.com/owner/repository',
                       border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.link),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -117,6 +122,7 @@ class _GitHubReleasePageState extends State<GitHubReleasePage> {
                       }
                       return null;
                     },
+                    onFieldSubmitted: (_) => _fetchRelease(),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
