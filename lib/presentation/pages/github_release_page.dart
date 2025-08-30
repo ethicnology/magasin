@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import '../../domain/entities/github_release.dart';
 import '../../domain/entities/github_asset.dart';
 import '../../domain/usecases/get_latest_release.dart';
@@ -62,6 +63,82 @@ class _GitHubReleasePageState extends State<GitHubReleasePage> {
     }
   }
 
+  List<GitHubAsset> _getFilteredAssets(List<GitHubAsset> assets) {
+    final platformExtensions = _getPlatformExtensions();
+
+    final filtered = assets.where((asset) {
+      final fileName = asset.name.toLowerCase();
+      return platformExtensions.any((ext) => fileName.endsWith(ext));
+    }).toList();
+
+    // If no platform-specific assets found, return all assets
+    return filtered.isEmpty ? assets : filtered;
+  }
+
+  List<String> _getPlatformExtensions() {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return ['.apk', '.aab'];
+      case TargetPlatform.iOS:
+        return ['.ipa'];
+      case TargetPlatform.windows:
+        return ['.exe', '.msi', '.msix'];
+      case TargetPlatform.macOS:
+        return ['.dmg', '.pkg', '.app.zip'];
+      case TargetPlatform.linux:
+        return ['.appimage', '.deb', '.rpm', '.tar.gz', '.snap', '.flatpak'];
+      case TargetPlatform.fuchsia:
+        return ['.far'];
+    }
+  }
+
+  String _getPlatformName() {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return 'Android';
+      case TargetPlatform.iOS:
+        return 'iOS';
+      case TargetPlatform.windows:
+        return 'Windows';
+      case TargetPlatform.macOS:
+        return 'macOS';
+      case TargetPlatform.linux:
+        return 'Linux';
+      case TargetPlatform.fuchsia:
+        return 'Fuchsia';
+    }
+  }
+
+  IconData _getAssetIcon(String fileName) {
+    final name = fileName.toLowerCase();
+
+    if (name.endsWith('.apk') || name.endsWith('.aab')) {
+      return Icons.android;
+    } else if (name.endsWith('.ipa')) {
+      return Icons.phone_iphone;
+    } else if (name.endsWith('.exe') ||
+        name.endsWith('.msi') ||
+        name.endsWith('.msix')) {
+      return Icons.desktop_windows;
+    } else if (name.endsWith('.dmg') ||
+        name.endsWith('.pkg') ||
+        name.endsWith('.app.zip')) {
+      return Icons.laptop_mac;
+    } else if (name.endsWith('.appimage') ||
+        name.endsWith('.deb') ||
+        name.endsWith('.rpm') ||
+        name.endsWith('.snap') ||
+        name.endsWith('.flatpak')) {
+      return Icons.computer;
+    } else if (name.endsWith('.tar.gz') || name.endsWith('.zip')) {
+      return Icons.archive;
+    } else if (name.contains('source') || name.endsWith('.tar.gz')) {
+      return Icons.code;
+    } else {
+      return Icons.insert_drive_file;
+    }
+  }
+
   Future<void> _downloadAssetFile(GitHubAsset asset) async {
     try {
       await _downloadAsset(asset.browserDownloadUrl, asset.name);
@@ -92,7 +169,7 @@ class _GitHubReleasePageState extends State<GitHubReleasePage> {
         title: const Text('GitHub Release Fetcher'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -144,7 +221,7 @@ class _GitHubReleasePageState extends State<GitHubReleasePage> {
                 color: Colors.red.shade50,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text(
+                  child: SelectableText(
                     _error!,
                     style: TextStyle(color: Colors.red.shade700),
                   ),
@@ -183,37 +260,86 @@ class _GitHubReleasePageState extends State<GitHubReleasePage> {
                 ),
               ),
               const SizedBox(height: 16),
-              Text(
-                'Assets (${_release!.assets.length})',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _release!.assets.length,
-                  itemBuilder: (context, index) {
-                    final asset = _release!.assets[index];
-                    return Card(
-                      child: ListTile(
-                        title: Text(asset.name),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Size: ${asset.formattedSize}'),
-                            Text('Downloads: ${asset.downloadCount}'),
-                            Text('Type: ${asset.contentType}'),
-                          ],
-                        ),
-                        trailing: ElevatedButton.icon(
-                          onPressed: () => _downloadAssetFile(asset),
-                          icon: const Icon(Icons.download),
-                          label: const Text('Download'),
-                        ),
-                        isThreeLine: true,
+              Builder(
+                builder: (context) {
+                  final filteredAssets = _getFilteredAssets(_release!.assets);
+                  final isFiltered =
+                      filteredAssets.length != _release!.assets.length;
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            isFiltered
+                                ? 'Assets for ${_getPlatformName()}'
+                                : 'All Assets',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(width: 8),
+                          Chip(
+                            label: Text(
+                              isFiltered
+                                  ? '${filteredAssets.length}/${_release!.assets.length}'
+                                  : '${_release!.assets.length}',
+                            ),
+                            backgroundColor: isFiltered
+                                ? Colors.blue.shade100
+                                : Colors.grey.shade100,
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                ),
+                      if (isFiltered) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          'Showing ${_getPlatformName()}-compatible files only',
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: Colors.grey.shade600),
+                        ),
+                      ] else ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          'No ${_getPlatformName()}-specific files found, showing all assets',
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: Colors.grey.shade600),
+                        ),
+                      ],
+                      const SizedBox(height: 8),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: filteredAssets.length,
+                        itemBuilder: (context, index) {
+                          final asset = filteredAssets[index];
+                          return Card(
+                            child: ListTile(
+                              leading: Icon(
+                                _getAssetIcon(asset.name),
+                                color: Colors.blue.shade600,
+                              ),
+                              title: Text(asset.name),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Size: ${asset.formattedSize}'),
+                                  Text('Downloads: ${asset.downloadCount}'),
+                                  Text('Type: ${asset.contentType}'),
+                                ],
+                              ),
+                              trailing: ElevatedButton.icon(
+                                onPressed: () => _downloadAssetFile(asset),
+                                icon: const Icon(Icons.download),
+                                label: const Text('Download'),
+                              ),
+                              isThreeLine: true,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ],
