@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'presentation/pages/github_release_page.dart';
 import 'presentation/cubit/cubit.dart';
+import 'theme.dart';
 import 'domain/usecases/get_latest_release_usecase.dart';
 import 'domain/usecases/download_asset_usecase.dart';
 import 'data/datasources/github_datasource.dart';
@@ -18,10 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Magasin - GitHub Release Fetcher',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.darkTheme,
       home: BlocProvider(
         create: (context) {
           final datasource = GitHubDatasource();
