@@ -1,7 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
 import 'github_user_model.dart';
 import 'github_asset_model.dart';
-import '../../domain/entities/github_release_entity.dart';
 
 part 'github_release_model.mapper.dart';
 
@@ -51,20 +51,17 @@ class GitHubReleaseModel with GitHubReleaseModelMappable {
     required this.body,
   });
 
-  GitHubReleaseEntity toEntity() {
-    return GitHubReleaseEntity(
+  ReleaseEntity toEntity() {
+    return ReleaseEntity(
+      platform: PlatformType.github,
       id: id,
       htmlUrl: htmlUrl,
       author: author.toEntity(),
       tagName: tagName,
       name: name,
-      draft: draft,
-      prerelease: prerelease,
-      createdAt: DateTime.parse(createdAt),
-      updatedAt: DateTime.parse(updatedAt),
+      body: body,
       publishedAt: DateTime.parse(publishedAt),
       assets: assets.map((asset) => asset.toEntity()).toList(),
-      body: body,
     );
   }
 }

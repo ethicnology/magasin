@@ -1,54 +1,60 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/usecases/get_latest_release_usecase.dart';
-import '../../domain/usecases/download_asset_usecase.dart';
-import '../../domain/entities/github_asset_entity.dart';
+import 'package:magasin/features/fetch_latest_release/domain/usecases/get_release_usecase.dart';
+import 'package:magasin/features/fetch_latest_release/domain/usecases/download_release_asset_usecase.dart';
 
 import 'state.dart';
 
 class GitHubReleaseCubit extends Cubit<GitHubReleaseState> {
-  final GetLatestReleaseUseCase _getLatestRelease;
-  final DownloadAssetUseCase _downloadAsset;
+  final GetReleaseUseCase _getRelease;
+  final DownloadReleaseAssetUseCase _downloadAsset;
 
   GitHubReleaseCubit({
-    required GetLatestReleaseUseCase getLatestRelease,
-    required DownloadAssetUseCase downloadAsset,
-  }) : _getLatestRelease = getLatestRelease,
+    required GetReleaseUseCase getRelease,
+    required DownloadReleaseAssetUseCase downloadAsset,
+  }) : _getRelease = getRelease,
        _downloadAsset = downloadAsset,
        super(const GitHubReleaseState.initial());
 
-  Future<void> fetchRelease(Uri github) async {
-    if (!github.toString().contains('github.com')) {
-      emit(const GitHubReleaseState.error('Please enter a valid GitHub URL'));
+  Future<void> fetchRelease(Uri url) async {
+    if (url.host != 'github.com' && url.host != 'gitlab.com') {
+      emit(
+        const GitHubReleaseState.error(
+          'Please enter a valid GitHub or GitLab URL',
+        ),
+      );
       return;
     }
 
     emit(const GitHubReleaseState.loading());
 
     try {
-      final release = await _getLatestRelease(github);
+      final release = await _getRelease(url);
       emit(GitHubReleaseState.loaded(release));
     } catch (e) {
       emit(GitHubReleaseState.error(e.toString()));
     }
   }
 
-  Future<void> downloadAsset(GitHubAssetEntity asset) async {
+  Future<void> downloadAsset(dynamic asset) async {
     final currentState = state;
     if (currentState.status != GitHubReleaseStatus.loaded ||
         currentState.release == null) {
       return;
     }
 
-    emit(
-      GitHubReleaseState.assetDownloading(currentState.release!, asset.name),
-    );
+    final platform = currentState.release!.platform;
+
+    final assetName = asset.name;
+    final downloadUrl = asset.browserDownloadUrl;
+
+    emit(GitHubReleaseState.assetDownloading(currentState.release!, assetName));
 
     try {
-      await _downloadAsset(asset.browserDownloadUrl, asset.name);
+      await _downloadAsset(downloadUrl, assetName, platform);
       emit(
         GitHubReleaseState.assetDownloadSuccess(
           currentState.release!,
-          asset.name,
+          assetName,
         ),
       );
 

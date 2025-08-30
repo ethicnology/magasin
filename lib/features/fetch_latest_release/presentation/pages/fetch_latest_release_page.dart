@@ -5,13 +5,15 @@ import '../cubit/state.dart';
 import '../widgets/release_info_card.dart';
 import '../widgets/assets_list.dart';
 
-class GitHubReleasePageNew extends StatelessWidget {
-  const GitHubReleasePageNew({super.key});
+class FetchLatestReleasePage extends StatelessWidget {
+  const FetchLatestReleasePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<GitHubReleaseCubit>();
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Find an App')),
+      appBar: AppBar(title: const Text('GitHub & GitLab Release Fetcher')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -63,9 +65,7 @@ class GitHubReleasePageNew extends StatelessWidget {
                         const SizedBox(height: 16),
                         AssetsList(
                           assets: state.release!.assets,
-                          onDownload: (asset) => context
-                              .read<GitHubReleaseCubit>()
-                              .downloadAsset(asset),
+                          onDownload: cubit.downloadAsset,
                         ),
                       ],
                     );
@@ -76,9 +76,7 @@ class GitHubReleasePageNew extends StatelessWidget {
                         const SizedBox(height: 16),
                         AssetsList(
                           assets: state.release!.assets,
-                          onDownload: (asset) => context
-                              .read<GitHubReleaseCubit>()
-                              .downloadAsset(asset),
+                          onDownload: cubit.downloadAsset,
                           downloadingAsset: state.downloadingAssetName,
                         ),
                       ],
@@ -90,9 +88,7 @@ class GitHubReleasePageNew extends StatelessWidget {
                         const SizedBox(height: 16),
                         AssetsList(
                           assets: state.release!.assets,
-                          onDownload: (asset) => context
-                              .read<GitHubReleaseCubit>()
-                              .downloadAsset(asset),
+                          onDownload: cubit.downloadAsset,
                         ),
                       ],
                     );
@@ -129,7 +125,7 @@ class _UrlInputFormState extends State<_UrlInputForm> {
 
       if (urlText.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please enter a GitHub URL')),
+          const SnackBar(content: Text('Please enter a repository URL')),
         );
         return;
       }
@@ -158,17 +154,19 @@ class _UrlInputFormState extends State<_UrlInputForm> {
             enableSuggestions: true,
             autocorrect: false,
             decoration: const InputDecoration(
-              labelText: 'GitHub Repository URL',
-              hintText: 'https://github.com/owner/repository',
+              labelText: 'GitHub or GitLab Repository URL',
+              hintText:
+                  'https://github.com/owner/repo or https://gitlab.com/owner/repo',
               border: OutlineInputBorder(),
               suffixIcon: Icon(Icons.link),
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter a GitHub URL';
+                return 'Please enter a repository URL';
               }
-              if (!value.contains('github.com')) {
-                return 'Please enter a valid GitHub URL';
+              if (!value.contains('github.com') &&
+                  !value.contains('gitlab.com')) {
+                return 'Please enter a valid GitHub or GitLab URL';
               }
               return null;
             },

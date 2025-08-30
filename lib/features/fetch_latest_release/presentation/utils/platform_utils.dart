@@ -1,42 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:magasin/features/fetch_latest_release/presentation/utils/supported_platforms_enum.dart';
-import '../../domain/entities/github_asset_entity.dart';
-
-extension GitHubAssetListExtensions on List<GitHubAssetEntity> {
-  List<GitHubAssetEntity> filterByPlatform([SupportedPlatform? platform]) {
-    final targetPlatform = platform ?? SupportedPlatformExtensions.current;
-
-    final filtered = where(
-      (asset) => asset.name.targetPlatform == targetPlatform,
-    ).toList();
-
-    // If no platform-specific assets found, return all assets
-    return filtered.isEmpty ? this : filtered;
-  }
-
-  List<GitHubAssetEntity> filterByPlatforms(List<SupportedPlatform> platforms) {
-    final filtered = where((asset) {
-      final assetPlatform = asset.name.targetPlatform;
-      return assetPlatform != null && platforms.contains(assetPlatform);
-    }).toList();
-
-    // If no platform-specific assets found, return all assets
-    return filtered.isEmpty ? this : filtered;
-  }
-
-  Map<SupportedPlatform, List<GitHubAssetEntity>> groupByPlatform() {
-    final Map<SupportedPlatform, List<GitHubAssetEntity>> grouped = {};
-
-    for (final asset in this) {
-      final platform = asset.name.targetPlatform;
-      if (platform != null) {
-        grouped.putIfAbsent(platform, () => []).add(asset);
-      }
-    }
-
-    return grouped;
-  }
-}
 
 extension StringAssetExtensions on String {
   IconData get assetIcon {

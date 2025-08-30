@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
 import 'github_user_model.dart';
-import '../../domain/entities/github_asset_entity.dart';
 
 part 'github_asset_model.mapper.dart';
 
@@ -38,18 +38,14 @@ class GitHubAssetModel with GitHubAssetModelMappable {
     required this.browserDownloadUrl,
   });
 
-  GitHubAssetEntity toEntity() {
-    return GitHubAssetEntity(
+  AssetEntity toEntity() {
+    return AssetEntity(
       id: id,
       name: name,
-      label: label,
-      uploader: uploader.toEntity(),
-      contentType: contentType,
-      size: size,
+      downloadUrl: browserDownloadUrl,
+      formattedSize: 'Unknown',
       downloadCount: downloadCount,
-      createdAt: DateTime.parse(createdAt),
-      updatedAt: DateTime.parse(updatedAt),
-      browserDownloadUrl: browserDownloadUrl,
+      contentType: contentType,
     );
   }
 }

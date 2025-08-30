@@ -1,5 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:magasin/features/fetch_latest_release/domain/entities/github_release_entity.dart';
+import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
 
 part 'state.mapper.dart';
 
@@ -16,7 +16,7 @@ enum GitHubReleaseStatus {
 @MappableClass()
 class GitHubReleaseState with GitHubReleaseStateMappable {
   final GitHubReleaseStatus status;
-  final GitHubReleaseEntity? release;
+  final ReleaseEntity? release;
   final String? errorMessage;
   final String? downloadingAssetName;
 
@@ -39,7 +39,7 @@ class GitHubReleaseState with GitHubReleaseStateMappable {
       errorMessage = null,
       downloadingAssetName = null;
 
-  GitHubReleaseState.loaded(GitHubReleaseEntity this.release)
+  GitHubReleaseState.loaded(ReleaseEntity this.release)
     : status = GitHubReleaseStatus.loaded,
       errorMessage = null,
       downloadingAssetName = null;
@@ -51,21 +51,21 @@ class GitHubReleaseState with GitHubReleaseStateMappable {
       downloadingAssetName = null;
 
   GitHubReleaseState.assetDownloading(
-    GitHubReleaseEntity this.release,
+    ReleaseEntity this.release,
     String assetName,
   ) : status = GitHubReleaseStatus.assetDownloading,
       errorMessage = null,
       downloadingAssetName = assetName;
 
   GitHubReleaseState.assetDownloadSuccess(
-    GitHubReleaseEntity this.release,
+    ReleaseEntity this.release,
     String assetName,
   ) : status = GitHubReleaseStatus.assetDownloadSuccess,
       errorMessage = null,
       downloadingAssetName = assetName;
 
   GitHubReleaseState.assetDownloadError(
-    GitHubReleaseEntity this.release,
+    ReleaseEntity this.release,
     String error,
   ) : status = GitHubReleaseStatus.assetDownloadError,
       errorMessage = error,

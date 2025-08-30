@@ -1,5 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import '../../domain/entities/github_user_entity.dart';
+import 'package:magasin/features/fetch_latest_release/domain/entities/user_entity.dart';
 
 part 'github_user_model.mapper.dart';
 
@@ -47,13 +47,13 @@ class GitHubUserModel with GitHubUserModelMappable {
     required this.siteAdmin,
   });
 
-  GitHubUserEntity toEntity() {
-    return GitHubUserEntity(
-      login: login,
+  UserEntity toEntity() {
+    return UserEntity(
+      username: login,
       id: id,
+      displayName: login,
       avatarUrl: avatarUrl,
-      htmlUrl: htmlUrl,
-      type: type,
+      profileUrl: htmlUrl,
     );
   }
 }

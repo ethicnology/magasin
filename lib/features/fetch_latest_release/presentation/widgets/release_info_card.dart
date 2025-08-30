@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/features/fetch_latest_release/domain/entities/github_release_entity.dart';
+import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
 
 class ReleaseInfoCard extends StatelessWidget {
-  final GitHubReleaseEntity release;
+  final ReleaseEntity release;
 
   const ReleaseInfoCard({super.key, required this.release});
 
@@ -26,6 +26,12 @@ class ReleaseInfoCard extends StatelessWidget {
             Text(
               'Published: ${release.publishedAt.toLocal().toString().split('.')[0]}',
               style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            Text(
+              'Platform: ${release.platform.name.toUpperCase()}',
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
             ),
             if (release.body.isNotEmpty) ...[
               const SizedBox(height: 8),

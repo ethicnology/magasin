@@ -1,20 +1,16 @@
 import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:magasin/features/fetch_latest_release/data/datasources/github_datasource.dart';
+import 'package:magasin/features/fetch_latest_release/data/datasources/gitlab_datasource.dart';
 
-class GitHubRepository {
-  final GitHubDatasource datasource;
+class GitLabRepository {
+  final GitLabDatasource datasource;
 
-  GitHubRepository({required this.datasource});
+  GitLabRepository({required this.datasource});
 
-  Future<ReleaseEntity> getLatestRelease(Uri github) async {
+  Future<ReleaseEntity> getLatestRelease(Uri gitlabUrl) async {
     try {
-      final ownerRepo = datasource.extractOwnerAndRepo(github.toString());
-      final parts = ownerRepo.split('/');
-      final owner = parts[0];
-      final repo = parts[1];
-
-      final releaseModel = await datasource.getLatestRelease(owner, repo);
+      final projectPath = datasource.extractProjectPath(gitlabUrl.toString());
+      final releaseModel = await datasource.getLatestRelease(projectPath);
       return releaseModel.toEntity();
     } catch (e) {
       throw Exception('Failed to get latest release: $e');

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:magasin/features/fetch_latest_release/presentation/utils/supported_platforms_enum.dart';
-import '../../domain/entities/github_asset_entity.dart';
+import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
 import '../utils/platform_utils.dart';
 
 class AssetsList extends StatelessWidget {
-  final List<GitHubAssetEntity> assets;
-  final Function(GitHubAssetEntity) onDownload;
+  final List<AssetEntity> assets;
+  final Function(AssetEntity) onDownload;
   final String? downloadingAsset;
 
   const AssetsList({
@@ -93,5 +93,41 @@ class AssetsList extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+extension AssetListExtensions on List<AssetEntity> {
+  List<AssetEntity> filterByPlatform([SupportedPlatform? platform]) {
+    final targetPlatform = platform ?? SupportedPlatformExtensions.current;
+
+    final filtered = where((asset) {
+      return asset.name.targetPlatform == targetPlatform;
+    }).toList();
+
+    // If no platform-specific assets found, return all assets
+    return filtered.isEmpty ? this : filtered;
+  }
+
+  List<AssetEntity> filterByPlatforms(List<SupportedPlatform> platforms) {
+    final filtered = where((asset) {
+      final assetPlatform = asset.name.targetPlatform;
+      return assetPlatform != null && platforms.contains(assetPlatform);
+    }).toList();
+
+    // If no platform-specific assets found, return all assets
+    return filtered.isEmpty ? this : filtered;
+  }
+
+  Map<SupportedPlatform, List<AssetEntity>> groupByPlatform() {
+    final Map<SupportedPlatform, List<AssetEntity>> grouped = {};
+
+    for (final asset in this) {
+      final platform = asset.name.targetPlatform;
+      if (platform != null) {
+        grouped.putIfAbsent(platform, () => []).add(asset);
+      }
+    }
+
+    return grouped;
   }
 }
