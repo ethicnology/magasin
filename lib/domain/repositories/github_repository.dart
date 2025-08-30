@@ -1,5 +1,5 @@
 import 'package:url_launcher/url_launcher.dart';
-import '../entities/github_release.dart';
+import '../entities/github_release_entity.dart';
 import '../../data/datasources/github_datasource.dart';
 
 class GitHubRepository {
@@ -7,13 +7,13 @@ class GitHubRepository {
 
   GitHubRepository({required this.datasource});
 
-  Future<GitHubRelease> getLatestRelease(String githubUrl) async {
+  Future<GitHubReleaseEntity> getLatestRelease(Uri github) async {
     try {
-      final ownerRepo = datasource.extractOwnerAndRepo(githubUrl);
+      final ownerRepo = datasource.extractOwnerAndRepo(github.toString());
       final parts = ownerRepo.split('/');
       final owner = parts[0];
       final repo = parts[1];
-      
+
       final releaseModel = await datasource.getLatestRelease(owner, repo);
       return releaseModel.toEntity();
     } catch (e) {

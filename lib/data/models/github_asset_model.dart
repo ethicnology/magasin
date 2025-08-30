@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'github_user_model.dart';
-import '../../domain/entities/github_asset.dart';
+import '../../domain/entities/github_asset_entity.dart';
 
 part 'github_asset_model.mapper.dart';
 
@@ -38,8 +38,8 @@ class GitHubAssetModel with GitHubAssetModelMappable {
     required this.browserDownloadUrl,
   });
 
-  GitHubAsset toEntity() {
-    return GitHubAsset(
+  GitHubAssetEntity toEntity() {
+    return GitHubAssetEntity(
       id: id,
       name: name,
       label: label,

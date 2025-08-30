@@ -1,10 +1,10 @@
-import 'github_user.dart';
-import 'github_asset.dart';
+import 'github_user_entity.dart';
+import 'github_asset_entity.dart';
 
-class GitHubRelease {
+class GitHubReleaseEntity {
   final int id;
   final String htmlUrl;
-  final GitHubUser author;
+  final GitHubUserEntity author;
   final String tagName;
   final String name;
   final bool draft;
@@ -12,10 +12,10 @@ class GitHubRelease {
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime publishedAt;
-  final List<GitHubAsset> assets;
+  final List<GitHubAssetEntity> assets;
   final String body;
 
-  const GitHubRelease({
+  const GitHubReleaseEntity({
     required this.id,
     required this.htmlUrl,
     required this.author,

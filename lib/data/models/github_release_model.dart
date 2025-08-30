@@ -1,7 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'github_user_model.dart';
 import 'github_asset_model.dart';
-import '../../domain/entities/github_release.dart';
+import '../../domain/entities/github_release_entity.dart';
 
 part 'github_release_model.mapper.dart';
 
@@ -51,8 +51,8 @@ class GitHubReleaseModel with GitHubReleaseModelMappable {
     required this.body,
   });
 
-  GitHubRelease toEntity() {
-    return GitHubRelease(
+  GitHubReleaseEntity toEntity() {
+    return GitHubReleaseEntity(
       id: id,
       htmlUrl: htmlUrl,
       author: author.toEntity(),

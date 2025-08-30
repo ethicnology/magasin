@@ -1,10 +1,10 @@
-import 'github_user.dart';
+import 'github_user_entity.dart';
 
-class GitHubAsset {
+class GitHubAssetEntity {
   final int id;
   final String name;
   final String? label;
-  final GitHubUser uploader;
+  final GitHubUserEntity uploader;
   final String contentType;
   final int size;
   final int downloadCount;
@@ -12,7 +12,7 @@ class GitHubAsset {
   final DateTime updatedAt;
   final String browserDownloadUrl;
 
-  const GitHubAsset({
+  const GitHubAssetEntity({
     required this.id,
     required this.name,
     this.label,

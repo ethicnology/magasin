@@ -1,5 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import '../../domain/entities/github_user.dart';
+import '../../domain/entities/github_user_entity.dart';
 
 part 'github_user_model.mapper.dart';
 
@@ -47,8 +47,8 @@ class GitHubUserModel with GitHubUserModelMappable {
     required this.siteAdmin,
   });
 
-  GitHubUser toEntity() {
-    return GitHubUser(
+  GitHubUserEntity toEntity() {
+    return GitHubUserEntity(
       login: login,
       id: id,
       avatarUrl: avatarUrl,

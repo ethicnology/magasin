@@ -1,9 +1,9 @@
 import '../repositories/github_repository.dart';
 
-class DownloadAsset {
+class DownloadAssetUseCase {
   final GitHubRepository repository;
 
-  DownloadAsset({required this.repository});
+  DownloadAssetUseCase({required this.repository});
 
   Future<void> call(String downloadUrl, String fileName) async {
     if (downloadUrl.isEmpty) {
