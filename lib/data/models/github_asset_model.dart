@@ -4,7 +4,7 @@ import '../../domain/entities/github_asset.dart';
 
 part 'github_asset_model.mapper.dart';
 
-@MappableClass()
+@MappableClass(caseStyle: CaseStyle.snakeCase)
 class GitHubAssetModel with GitHubAssetModelMappable {
   final String url;
   final int id;

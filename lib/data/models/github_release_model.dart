@@ -5,7 +5,7 @@ import '../../domain/entities/github_release.dart';
 
 part 'github_release_model.mapper.dart';
 
-@MappableClass()
+@MappableClass(caseStyle: CaseStyle.snakeCase)
 class GitHubReleaseModel with GitHubReleaseModelMappable {
   final String url;
   final String assetsUrl;

@@ -3,7 +3,7 @@ import '../../domain/entities/github_user.dart';
 
 part 'github_user_model.mapper.dart';
 
-@MappableClass()
+@MappableClass(caseStyle: CaseStyle.snakeCase)
 class GitHubUserModel with GitHubUserModelMappable {
   final String login;
   final int id;
