@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/presentation/utils/supported_platforms_enum.dart';
+import 'package:magasin/features/fetch_latest_release/presentation/utils/supported_platforms_enum.dart';
 import '../../domain/entities/github_asset_entity.dart';
 import '../utils/platform_utils.dart';
 

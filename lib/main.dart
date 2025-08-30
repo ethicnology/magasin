@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'presentation/pages/github_release_page.dart';
-import 'presentation/cubit/cubit.dart';
+import 'features/fetch_latest_release/presentation/pages/github_release_page.dart';
+import 'features/fetch_latest_release/presentation/cubit/cubit.dart';
 import 'theme.dart';
-import 'domain/usecases/get_latest_release_usecase.dart';
-import 'domain/usecases/download_asset_usecase.dart';
-import 'data/datasources/github_datasource.dart';
-import 'domain/repositories/github_repository.dart';
+import 'features/fetch_latest_release/domain/usecases/get_latest_release_usecase.dart';
+import 'features/fetch_latest_release/domain/usecases/download_asset_usecase.dart';
+import 'features/fetch_latest_release/data/datasources/github_datasource.dart';
+import 'features/fetch_latest_release/domain/repositories/github_repository.dart';
 
 void main() {
   runApp(const MyApp());

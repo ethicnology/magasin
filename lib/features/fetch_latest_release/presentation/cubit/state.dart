@@ -1,5 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import '../../domain/entities/github_release_entity.dart';
+import 'package:magasin/features/fetch_latest_release/domain/entities/github_release_entity.dart';
 
 part 'state.mapper.dart';
 
