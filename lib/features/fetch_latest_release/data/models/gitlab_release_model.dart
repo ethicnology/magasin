@@ -35,6 +35,9 @@ class GitlabReleaseModel with GitlabReleaseModelMappable {
     this.evidences = const [],
   });
 
+  static final fromMap = GitlabReleaseModelMapper.fromMap;
+  static final fromJson = GitlabReleaseModelMapper.fromJson;
+
   ReleaseEntity toEntity() {
     // Extract organization and project name from tagPath
     // Example: /fdroid/fdroidclient/-/tags/1.23.0

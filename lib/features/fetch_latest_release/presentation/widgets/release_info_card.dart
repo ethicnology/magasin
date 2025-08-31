@@ -15,11 +15,6 @@ class ReleaseInfoCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              release.name,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 8),
-            Text(
               'Tag: ${release.tag}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),

@@ -25,7 +25,12 @@ class ReleaseRepository {
           result.owner,
           result.repo,
         );
-        release = model.toEntity();
+        final commitHash = await _githubDatasource.getCommitHashForTag(
+          result.owner,
+          result.repo,
+          model.tagName,
+        );
+        release = model.toEntity(commitHash: commitHash);
       } else if (url.isGitLab) {
         final result = extractOwnerAndRepo(url);
         final model = await _gitlabDatasource.getLatestRelease(

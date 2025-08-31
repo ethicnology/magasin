@@ -10,10 +10,10 @@ class GitLabDatasource {
 
   Future<GitlabReleaseModel> getLatestRelease(String owner, String repo) async {
     final encodedPath = Uri.encodeComponent('$owner/$repo');
-    final url = '$baseUrl/projects/$encodedPath/releases';
+    final endpoint = '$baseUrl/projects/$encodedPath/releases';
 
     final response = await client.get(
-      Uri.parse(url),
+      Uri.parse(endpoint),
       headers: {'Accept': 'application/json'},
     );
 
@@ -26,7 +26,7 @@ class GitLabDatasource {
 
       // Get the first (latest) release
       final json = jsonList.first as Map<String, dynamic>;
-      return GitlabReleaseModelMapper.fromMap(json);
+      return GitlabReleaseModel.fromMap(json);
     } else if (response.statusCode == 404) {
       throw Exception('Project not found or no releases available');
     } else {

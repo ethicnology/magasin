@@ -2,7 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 part 'asset_entity.mapper.dart';
 
-@MappableClass(caseStyle: CaseStyle.snakeCase)
+@MappableClass()
 class AssetEntity with AssetEntityMappable {
   final String name;
   final Uri url;

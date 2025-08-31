@@ -1,79 +1,61 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magasin/errors.dart';
 import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
+import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
+import 'package:magasin/features/fetch_latest_release/domain/usecases/follow_futures_releases_usecase.dart';
 import 'package:magasin/features/fetch_latest_release/domain/usecases/get_release_usecase.dart';
 import 'package:magasin/features/fetch_latest_release/domain/usecases/download_release_asset_usecase.dart';
+import 'package:magasin/utils.dart';
 
 import 'state.dart';
 
-class GitHubReleaseCubit extends Cubit<GitHubReleaseState> {
-  final GetReleaseUseCase _getRelease;
-  final DownloadReleaseAssetUseCase _downloadAsset;
+class LatestReleaseCubit extends Cubit<LatestReleaseState> {
+  final GetReleaseUseCase getReleaseUseCase;
+  final DownloadReleaseAssetUseCase downloadAssetUseCase;
+  final FollowFuturesReleasesUseCase followFuturesReleasesUseCase;
 
-  GitHubReleaseCubit({
-    required GetReleaseUseCase getRelease,
-    required DownloadReleaseAssetUseCase downloadAsset,
-  }) : _getRelease = getRelease,
-       _downloadAsset = downloadAsset,
-       super(const GitHubReleaseState.initial());
+  LatestReleaseCubit({
+    required this.getReleaseUseCase,
+    required this.downloadAssetUseCase,
+    required this.followFuturesReleasesUseCase,
+  }) : super(const LatestReleaseState());
+
+  void reset() => emit(const LatestReleaseState());
 
   Future<void> fetchRelease(Uri url) async {
-    if (url.host != 'github.com' && url.host != 'gitlab.com') {
+    if (url.isGitHub && url.isGitLab) {
       emit(
-        const GitHubReleaseState.error(
-          'Please enter a valid GitHub or GitLab URL',
+        state.copyWith(
+          error: AppError('Please enter a valid Github or GitLab URL'),
         ),
       );
       return;
     }
 
-    emit(const GitHubReleaseState.loading());
-
     try {
-      final release = await _getRelease(url);
-      emit(GitHubReleaseState.loaded(release));
+      final release = await getReleaseUseCase(url);
+      emit(state.copyWith(release: release));
     } catch (e) {
-      emit(GitHubReleaseState.error(e.toString()));
+      emit(state.copyWith(error: AppError(e.toString())));
     }
   }
 
   Future<void> downloadAsset(AssetEntity asset) async {
-    final currentState = state;
-    if (currentState.status != GitHubReleaseStatus.loaded ||
-        currentState.release == null) {
-      return;
-    }
-
-    emit(
-      GitHubReleaseState.assetDownloading(currentState.release!, asset.name),
-    );
-
     try {
-      await _downloadAsset(asset);
-      emit(
-        GitHubReleaseState.assetDownloadSuccess(
-          currentState.release!,
-          asset.name,
-        ),
-      );
-
-      // Return to loaded state after a short delay
-      await Future.delayed(const Duration(seconds: 2));
-      emit(GitHubReleaseState.loaded(currentState.release!));
+      await downloadAssetUseCase(asset);
     } catch (e) {
-      emit(
-        GitHubReleaseState.assetDownloadError(
-          currentState.release!,
-          e.toString(),
-        ),
-      );
-
-      // Return to loaded state after showing error
-      await Future.delayed(const Duration(seconds: 3));
-      emit(GitHubReleaseState.loaded(currentState.release!));
+      emit(state.copyWith(error: AppError(e.toString())));
     }
   }
 
-  void reset() {
-    emit(const GitHubReleaseState.initial());
+  Future<void> followFuturesReleases(ReleaseEntity release) async {
+    if (state.release == null) return;
+
+    try {
+      await followFuturesReleasesUseCase(release);
+    } catch (e) {
+      print(e);
+      emit(state.copyWith(error: AppError(e.toString())));
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/github_release_model.dart';
+import '../models/github_tag_reference_model.dart';
 
 class GitHubDatasource {
   final http.Client client;
@@ -9,10 +10,10 @@ class GitHubDatasource {
   GitHubDatasource({http.Client? client}) : client = client ?? http.Client();
 
   Future<GithubReleaseModel> getLatestRelease(String owner, String repo) async {
-    final url = '$baseUrl/repos/$owner/$repo/releases/latest';
+    final endpoint = '$baseUrl/repos/$owner/$repo/releases/latest';
 
     final response = await client.get(
-      Uri.parse(url),
+      Uri.parse(endpoint),
       headers: {
         'Accept': 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
@@ -21,11 +22,45 @@ class GitHubDatasource {
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as Map<String, dynamic>;
-      return GithubReleaseModelMapper.fromMap(json);
+      return GithubReleaseModel.fromMap(json);
     } else if (response.statusCode == 404) {
       throw Exception('Repository not found or no releases available');
     } else {
       throw Exception('Failed to fetch release: ${response.statusCode}');
+    }
+  }
+
+  Future<String> getCommitHashForTag(
+    String owner,
+    String repo,
+    String tagName,
+  ) async {
+    final tagReference = await getTagReference(owner, repo, tagName);
+    return tagReference.getCommitHash();
+  }
+
+  Future<GithubTagReferenceModel> getTagReference(
+    String owner,
+    String repo,
+    String tagName,
+  ) async {
+    final endpoint = '$baseUrl/repos/$owner/$repo/git/ref/tags/$tagName';
+
+    final response = await client.get(
+      Uri.parse(endpoint),
+      headers: {
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      return GithubTagReferenceModel.fromMap(json);
+    } else if (response.statusCode == 404) {
+      throw Exception('Tag not found: $tagName');
+    } else {
+      throw Exception('Failed to fetch tag: ${response.statusCode}');
     }
   }
 }

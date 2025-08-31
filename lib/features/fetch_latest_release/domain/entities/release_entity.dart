@@ -1,3 +1,4 @@
+import 'package:magasin/errors.dart';
 import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
 import 'package:magasin/features/fetch_latest_release/domain/entities/user_entity.dart';
 
@@ -20,7 +21,7 @@ class ReleaseEntity {
 
   final List<AssetEntity> assets;
 
-  const ReleaseEntity({
+  ReleaseEntity({
     required this.platform,
     required this.name,
     required this.tag,
@@ -32,5 +33,19 @@ class ReleaseEntity {
     required this.assets,
     required this.organization,
     required this.project,
-  });
+  }) {
+    if (commit.length != 40) {
+      throw AppError('Commit hash must be exactly 40 characters long');
+    }
+    if (!_isValidSha1(commit)) {
+      throw AppError(
+        'Commit hash must contain only hexadecimal characters (0-9, a-f)',
+      );
+    }
+  }
+
+  static bool _isValidSha1(String hash) {
+    if (hash.length != 40) return false;
+    return RegExp(r'^[a-f0-9]+$').hasMatch(hash.toLowerCase());
+  }
 }

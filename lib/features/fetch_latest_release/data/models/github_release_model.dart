@@ -51,7 +51,10 @@ class GithubReleaseModel with GithubReleaseModelMappable {
     required this.body,
   });
 
-  ReleaseEntity toEntity() {
+  static final fromMap = GithubReleaseModelMapper.fromMap;
+  static final fromJson = GithubReleaseModelMapper.fromJson;
+
+  ReleaseEntity toEntity({required String commitHash}) {
     // Extract organization and project name from htmlUrl
     // Example: https://github.com/microsoft/vscode/releases/tag/1.85.0
     final uri = Uri.parse(htmlUrl);
@@ -66,7 +69,7 @@ class GithubReleaseModel with GithubReleaseModelMappable {
       description: body,
       publishedAt: publishedAt,
       url: Uri.parse(htmlUrl),
-      commit: targetCommitish,
+      commit: commitHash,
       author: author.toEntity(),
       assets: assets
           .map(
