@@ -46,6 +46,11 @@ dependencies:
   
   # State management
   flutter_bloc: ^8.1.6
+  drift: ^2.28.1
+  path_provider: ^2.1.5
+  sqlcipher_flutter_libs: ^0.6.8
+  sqlite3: ^2.9.0
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:
@@ -60,7 +65,8 @@ dev_dependencies:
   
   # Code generation for dart_mappable
   dart_mappable_builder: ^4.2.3
-  build_runner: ^2.4.9
+  build_runner: ^2.7.0
+  drift_dev: ^2.28.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

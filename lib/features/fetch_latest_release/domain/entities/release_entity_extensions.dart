@@ -9,7 +9,7 @@ import 'package:magasin/database/database.dart';
 
 extension ReleaseEntityExtensions on ReleaseEntity {
   ReleasesCompanion toCompanion() {
-    final jsonAssets = json.encode(
+    final encodedAssets = json.encode(
       assets.map((asset) => asset.toMap()).toList(),
     );
 
@@ -27,16 +27,16 @@ extension ReleaseEntityExtensions on ReleaseEntity {
       createdAt: Value(DateTime.now()),
       description: Value(description),
       commit: Value(commit),
-      assetsUrls: Value(jsonAssets),
+      assets: Value(encodedAssets),
     );
   }
 }
 
 extension ReleaseDataExtensions on Release {
   ReleaseEntity toEntity() {
-    final jsonAssets = json.decode(assetsUrls) as List<dynamic>;
-    final assets = jsonAssets
-        .map((asset) => AssetEntity.fromMap(asset))
+    final decoded = json.decode(assets) as List<dynamic>;
+    final decodedAssets = decoded
+        .map((e) => AssetEntity.fromMap(e as Map<String, dynamic>))
         .toList();
 
     return ReleaseEntity(
@@ -47,7 +47,7 @@ extension ReleaseDataExtensions on Release {
       url: Uri.parse(url),
       description: description,
       commit: commit,
-      assets: assets,
+      assets: decodedAssets,
       organization: organization,
       project: project,
       author: UserEntity(
