@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
 import 'package:magasin/features/fetch_latest_release/domain/usecases/get_release_usecase.dart';
 import 'package:magasin/features/fetch_latest_release/domain/usecases/download_release_asset_usecase.dart';
 
@@ -35,26 +36,23 @@ class GitHubReleaseCubit extends Cubit<GitHubReleaseState> {
     }
   }
 
-  Future<void> downloadAsset(dynamic asset) async {
+  Future<void> downloadAsset(AssetEntity asset) async {
     final currentState = state;
     if (currentState.status != GitHubReleaseStatus.loaded ||
         currentState.release == null) {
       return;
     }
 
-    final platform = currentState.release!.platform;
-
-    final assetName = asset.name;
-    final downloadUrl = asset.browserDownloadUrl;
-
-    emit(GitHubReleaseState.assetDownloading(currentState.release!, assetName));
+    emit(
+      GitHubReleaseState.assetDownloading(currentState.release!, asset.name),
+    );
 
     try {
-      await _downloadAsset(downloadUrl, assetName, platform);
+      await _downloadAsset(asset);
       emit(
         GitHubReleaseState.assetDownloadSuccess(
           currentState.release!,
-          assetName,
+          asset.name,
         ),
       );
 

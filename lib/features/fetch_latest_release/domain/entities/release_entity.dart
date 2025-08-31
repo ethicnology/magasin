@@ -1,31 +1,36 @@
 import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
 import 'package:magasin/features/fetch_latest_release/domain/entities/user_entity.dart';
 
-enum PlatformType { github, gitlab }
+enum ReleaseProvider { github, gitlab }
 
 class ReleaseEntity {
-  final PlatformType platform;
-  final int id;
+  final String organization;
+  final String project;
+  final ReleaseProvider platform;
+  final String tag;
+  final String commit;
+  final Uri url;
+
   final String name;
-  final String tagName;
-  final String body;
+  final String description;
+
   final DateTime publishedAt;
-  final String htmlUrl;
+
   final UserEntity author;
+
   final List<AssetEntity> assets;
 
   const ReleaseEntity({
     required this.platform,
-    required this.id,
     required this.name,
-    required this.tagName,
-    required this.body,
+    required this.tag,
+    required this.description,
     required this.publishedAt,
-    required this.htmlUrl,
+    required this.url,
+    required this.commit,
     required this.author,
     required this.assets,
+    required this.organization,
+    required this.project,
   });
-
-  String get authorName => author.displayName;
-  String get authorAvatarUrl => author.avatarUrl;
 }

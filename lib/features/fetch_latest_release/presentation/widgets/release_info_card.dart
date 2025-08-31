@@ -20,7 +20,7 @@ class ReleaseInfoCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Tag: ${release.tagName}',
+              'Tag: ${release.tag}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
@@ -33,13 +33,13 @@ class ReleaseInfoCard extends StatelessWidget {
                 context,
               ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
             ),
-            if (release.body.isNotEmpty) ...[
+            if (release.description.isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
                 'Description:',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              Text(release.body),
+              Text(release.description),
             ],
           ],
         ),

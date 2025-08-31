@@ -67,14 +67,6 @@ class AssetsList extends StatelessWidget {
               child: ListTile(
                 leading: Icon(asset.name.assetIcon),
                 title: Text(asset.name),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Size: ${asset.formattedSize}'),
-                    Text('Downloads: ${asset.downloadCount}'),
-                    Text('Type: ${asset.contentType}'),
-                  ],
-                ),
                 trailing: ElevatedButton.icon(
                   onPressed: isDownloading ? null : () => onDownload(asset),
                   icon: isDownloading
@@ -86,7 +78,6 @@ class AssetsList extends StatelessWidget {
                       : const Icon(Icons.download),
                   label: Text(isDownloading ? 'Downloading...' : 'Download'),
                 ),
-                isThreeLine: true,
               ),
             );
           },

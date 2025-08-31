@@ -77,7 +77,6 @@ class FetchLatestReleasePage extends StatelessWidget {
                         AssetsList(
                           assets: state.release!.assets,
                           onDownload: cubit.downloadAsset,
-                          downloadingAsset: state.downloadingAssetName,
                         ),
                       ],
                     );

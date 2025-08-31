@@ -1,17 +1,14 @@
-class AssetEntity {
-  final int? id;
-  final String name;
-  final String downloadUrl;
-  final String formattedSize;
-  final int downloadCount;
-  final String contentType;
+import 'package:dart_mappable/dart_mappable.dart';
 
-  const AssetEntity({
-    this.id,
-    required this.name,
-    required this.downloadUrl,
-    required this.formattedSize,
-    required this.downloadCount,
-    required this.contentType,
-  });
+part 'asset_entity.mapper.dart';
+
+@MappableClass(caseStyle: CaseStyle.snakeCase)
+class AssetEntity with AssetEntityMappable {
+  final String name;
+  final Uri url;
+
+  const AssetEntity({required this.name, required this.url});
+
+  static final fromMap = AssetEntityMapper.fromMap;
+  static final fromJson = AssetEntityMapper.fromJson;
 }
