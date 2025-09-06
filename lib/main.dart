@@ -8,7 +8,7 @@ import 'package:magasin/utils.dart';
 import 'features/fetch_latest_release/presentation/pages/search_release_page.dart';
 import 'features/fetch_latest_release/presentation/cubit/cubit.dart';
 import 'theme.dart';
-import 'features/fetch_latest_release/domain/usecases/get_release_usecase.dart';
+import 'shared/domain/usecases/get_latest_release_usecase.dart';
 import 'features/fetch_latest_release/domain/usecases/download_release_asset_usecase.dart';
 import 'features/fetch_latest_release/domain/usecases/follow_futures_releases_usecase.dart';
 import 'features/fetch_latest_release/data/datasources/github_datasource.dart';
@@ -46,7 +46,9 @@ class MyApp extends StatelessWidget {
             gitlabDatasource: gitlabDatasource,
           );
 
-          final getReleaseUseCase = GetReleaseUseCase(releaseRepository);
+          final getLatestReleaseUseCase = GetLatestReleaseUseCase(
+            releaseRepository,
+          );
           final downloadAssetUseCase = DownloadReleaseAssetUseCase(
             releaseRepository,
           );
@@ -55,7 +57,7 @@ class MyApp extends StatelessWidget {
           );
 
           return LatestReleaseCubit(
-            getReleaseUseCase: getReleaseUseCase,
+            getLatestReleaseUseCase: getLatestReleaseUseCase,
             downloadAssetUseCase: downloadAssetUseCase,
             followFuturesReleasesUseCase: followFuturesReleasesUseCase,
           );

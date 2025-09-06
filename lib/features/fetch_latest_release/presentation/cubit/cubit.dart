@@ -3,19 +3,19 @@ import 'package:magasin/errors.dart';
 import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
 import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
 import 'package:magasin/features/fetch_latest_release/domain/usecases/follow_futures_releases_usecase.dart';
-import 'package:magasin/features/fetch_latest_release/domain/usecases/get_release_usecase.dart';
+import 'package:magasin/shared/domain/usecases/get_latest_release_usecase.dart';
 import 'package:magasin/features/fetch_latest_release/domain/usecases/download_release_asset_usecase.dart';
 import 'package:magasin/utils.dart';
 
 import 'state.dart';
 
 class LatestReleaseCubit extends Cubit<LatestReleaseState> {
-  final GetReleaseUseCase getReleaseUseCase;
+  final GetLatestReleaseUseCase getLatestReleaseUseCase;
   final DownloadReleaseAssetUseCase downloadAssetUseCase;
   final FollowFuturesReleasesUseCase followFuturesReleasesUseCase;
 
   LatestReleaseCubit({
-    required this.getReleaseUseCase,
+    required this.getLatestReleaseUseCase,
     required this.downloadAssetUseCase,
     required this.followFuturesReleasesUseCase,
   }) : super(const LatestReleaseState());
@@ -33,7 +33,7 @@ class LatestReleaseCubit extends Cubit<LatestReleaseState> {
     }
 
     try {
-      final release = await getReleaseUseCase(url);
+      final release = await getLatestReleaseUseCase(url);
       emit(state.copyWith(release: release));
     } catch (e) {
       emit(state.copyWith(error: AppError(e.toString())));
@@ -54,7 +54,6 @@ class LatestReleaseCubit extends Cubit<LatestReleaseState> {
     try {
       await followFuturesReleasesUseCase(release);
     } catch (e) {
-      print(e);
       emit(state.copyWith(error: AppError(e.toString())));
     }
   }
