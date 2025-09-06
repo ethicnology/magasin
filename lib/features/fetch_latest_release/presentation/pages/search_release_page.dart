@@ -66,7 +66,11 @@ class _UrlInputFormState extends State<_UrlInputForm> {
       }
 
       try {
-        final uri = Uri.parse(urlText);
+        if (!urlText.contains('://')) {
+          _urlController.text = 'https://$urlText';
+        }
+        var uri = Uri.parse(_urlController.text);
+
         context.read<LatestReleaseCubit>().fetchRelease(uri);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
