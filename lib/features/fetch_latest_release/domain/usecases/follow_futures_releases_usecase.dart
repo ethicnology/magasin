@@ -1,15 +1,14 @@
-import 'package:magasin/database/database.dart';
-import 'package:magasin/database/tables/releases_table.dart';
 import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
+import 'package:magasin/shared/domain/db_release_repository.dart';
 
 class FollowFuturesReleasesUseCase {
-  FollowFuturesReleasesUseCase();
+  final DbReleaseRepository dbReleaseRepository;
+
+  FollowFuturesReleasesUseCase(this.dbReleaseRepository);
 
   Future<void> call(ReleaseEntity release) async {
     try {
-      await database
-          .into(database.releases)
-          .insertOnConflictUpdate(release.toCompanion());
+      await dbReleaseRepository.store(release);
       return;
     } catch (e) {
       rethrow;
