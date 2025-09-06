@@ -33,7 +33,7 @@ class LatestReleaseCubit extends Cubit<LatestReleaseState> {
     }
 
     try {
-      final release = await getLatestReleaseUseCase(url);
+      final release = await getLatestReleaseUseCase(url: url);
       emit(state.copyWith(release: release));
     } catch (e) {
       emit(state.copyWith(error: AppError(e.toString())));
@@ -42,7 +42,7 @@ class LatestReleaseCubit extends Cubit<LatestReleaseState> {
 
   Future<void> downloadAsset(AssetEntity asset) async {
     try {
-      await downloadAssetUseCase(asset);
+      await downloadAssetUseCase(asset: asset);
     } catch (e) {
       emit(state.copyWith(error: AppError(e.toString())));
     }
@@ -52,7 +52,7 @@ class LatestReleaseCubit extends Cubit<LatestReleaseState> {
     if (state.release == null) return;
 
     try {
-      await followFuturesReleasesUseCase(release);
+      await followFuturesReleasesUseCase(release: release);
     } catch (e) {
       emit(state.copyWith(error: AppError(e.toString())));
     }

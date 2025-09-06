@@ -6,7 +6,7 @@ class DownloadReleaseAssetUseCase {
 
   DownloadReleaseAssetUseCase(this._repository);
 
-  Future<void> call(AssetEntity asset) async {
+  Future<void> call({required AssetEntity asset}) async {
     return await _repository.downloadAsset(asset);
   }
 }

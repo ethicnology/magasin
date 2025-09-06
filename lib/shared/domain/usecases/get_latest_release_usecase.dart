@@ -6,7 +6,7 @@ class GetLatestReleaseUseCase {
 
   GetLatestReleaseUseCase(this._repository);
 
-  Future<ReleaseEntity> call(Uri url) async {
+  Future<ReleaseEntity> call({required Uri url}) async {
     return await _repository.getLatestRelease(url);
   }
 }

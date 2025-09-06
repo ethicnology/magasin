@@ -6,7 +6,7 @@ class FollowFuturesReleasesUseCase {
 
   FollowFuturesReleasesUseCase(this.dbReleaseRepository);
 
-  Future<void> call(ReleaseEntity release) async {
+  Future<void> call({required ReleaseEntity release}) async {
     try {
       await dbReleaseRepository.store(release);
       return;
