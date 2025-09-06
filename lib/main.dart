@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magasin/database/database.dart';
 import 'package:magasin/features/fetch_latest_release/domain/repositories/release_repository.dart';
-import 'package:magasin/shared/domain/db_release_repository.dart';
+import 'package:magasin/shared/domain/repositories/db_release_repository.dart';
 import 'package:magasin/utils.dart';
 import 'features/fetch_latest_release/presentation/pages/search_release_page.dart';
 import 'features/fetch_latest_release/presentation/cubit/cubit.dart';

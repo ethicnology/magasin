@@ -1,5 +1,5 @@
 import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
-import 'package:magasin/shared/domain/db_release_repository.dart';
+import 'package:magasin/shared/domain/repositories/db_release_repository.dart';
 
 class FollowFuturesReleasesUseCase {
   final DbReleaseRepository dbReleaseRepository;
