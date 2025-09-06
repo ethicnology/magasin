@@ -44,8 +44,8 @@ enum ReleaseProviderColumn {
   github,
   gitlab;
 
-  static ReleaseProviderColumn fromEntity(ReleaseEntity entity) {
-    switch (entity.platform) {
+  static ReleaseProviderColumn fromEntity(ReleaseProvider entity) {
+    switch (entity) {
       case ReleaseProvider.github:
         return ReleaseProviderColumn.github;
       case ReleaseProvider.gitlab:
@@ -72,7 +72,7 @@ extension ReleaseEntityExtensions on ReleaseEntity {
     return ReleasesCompanion(
       name: Value(name),
       tag: Value(tag),
-      platform: Value(ReleaseProviderColumn.fromEntity(this)),
+      platform: Value(ReleaseProviderColumn.fromEntity(platform)),
       publishedAt: Value(publishedAt),
       url: Value(url.toString()),
       organization: Value(organization),
