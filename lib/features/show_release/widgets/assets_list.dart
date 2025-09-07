@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/features/fetch_latest_release/presentation/utils/supported_platforms_enum.dart';
-import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
-import '../utils/platform_utils.dart';
+import 'package:magasin/features/fetch_latest_release/utils/supported_platforms_enum.dart';
+import 'package:magasin/shared/domain/entities/asset_entity.dart';
+import 'package:magasin/theme.dart';
+import '../../fetch_latest_release/utils/platform_utils.dart';
 
 class AssetsList extends StatelessWidget {
   final List<AssetEntity> assets;
@@ -25,36 +26,28 @@ class AssetsList extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
-              isFiltered
-                  ? 'Assets for ${SupportedPlatformExtensions.current.displayName}'
-                  : 'All Assets',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(width: 8),
             Chip(
               label: Text(
                 isFiltered
-                    ? '${filteredAssets.length}/${assets.length}'
-                    : '${assets.length}',
+                    ? '${filteredAssets.length}/${assets.length} Assets for ${SupportedPlatformExtensions.current.displayName}'
+                    : '${assets.length} Assets',
               ),
             ),
           ],
         ),
-        if (isFiltered) ...[
-          const SizedBox(height: 4),
+
+        if (assets.isNotEmpty && isFiltered) ...[
+          const SizedBox(height: AppSizes.s),
           Text(
             'Showing ${SupportedPlatformExtensions.current.displayName}-compatible files only',
-            style: Theme.of(context).textTheme.bodySmall,
           ),
-        ] else ...[
-          const SizedBox(height: 4),
+        ] else if (assets.isNotEmpty && !isFiltered) ...[
+          const SizedBox(height: AppSizes.s),
           Text(
             'No ${SupportedPlatformExtensions.current.displayName}-specific files found, showing all assets',
-            style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSizes.s),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -67,7 +60,7 @@ class AssetsList extends StatelessWidget {
               child: ListTile(
                 leading: Icon(asset.name.assetIcon),
                 title: Text(asset.name),
-                trailing: ElevatedButton.icon(
+                trailing: TextButton.icon(
                   onPressed: isDownloading ? null : () => onDownload(asset),
                   icon: isDownloading
                       ? const SizedBox(

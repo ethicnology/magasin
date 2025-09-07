@@ -1,8 +1,31 @@
+import 'package:flutter/material.dart';
 import 'package:magasin/errors.dart';
-import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
-import 'package:magasin/features/fetch_latest_release/domain/entities/user_entity.dart';
+import 'package:magasin/shared/domain/entities/asset_entity.dart';
+import 'package:magasin/shared/domain/entities/user_entity.dart';
 
 enum ReleaseProvider { github, gitlab }
+
+extension ReleaseProviderExtension on ReleaseProvider {
+  IconData get icon {
+    switch (this) {
+      case ReleaseProvider.github:
+        return Icons.code;
+      case ReleaseProvider.gitlab:
+        return Icons.source;
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case ReleaseProvider.github:
+        return Colors.black;
+      case ReleaseProvider.gitlab:
+        return Colors.orange;
+    }
+  }
+
+  Uri get url => Uri.https('$name.com');
+}
 
 class ReleaseEntity {
   final String organization;

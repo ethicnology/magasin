@@ -1,19 +1,15 @@
-import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
-import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
-import 'package:magasin/features/fetch_latest_release/data/datasources/github_datasource.dart';
-import 'package:magasin/features/fetch_latest_release/data/datasources/gitlab_datasource.dart';
+import 'package:magasin/shared/domain/entities/asset_entity.dart';
+import 'package:magasin/shared/domain/entities/release_entity.dart';
+import 'package:magasin/shared/data/datasources/github_datasource.dart';
+import 'package:magasin/shared/data/datasources/gitlab_datasource.dart';
 import 'package:magasin/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReleaseRepository {
-  final GitHubDatasource _githubDatasource;
-  final GitLabDatasource _gitlabDatasource;
+  final _githubDatasource = GitHubDatasource();
+  final _gitlabDatasource = GitLabDatasource();
 
-  ReleaseRepository({
-    required GitHubDatasource githubDatasource,
-    required GitLabDatasource gitlabDatasource,
-  }) : _githubDatasource = githubDatasource,
-       _gitlabDatasource = gitlabDatasource;
+  ReleaseRepository();
 
   /// Fetch the latest release from GitHub or GitLab based on the URL
   Future<ReleaseEntity> getLatestRelease(Uri url) async {

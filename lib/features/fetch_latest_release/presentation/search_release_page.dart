@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magasin/utils.dart';
-import '../cubit/cubit.dart';
-import '../cubit/state.dart';
-import 'release_details_page.dart';
+import 'cubit/cubit.dart';
+import 'cubit/state.dart';
+import '../../show_release/release_details_page.dart';
 
 class SearchReleasePage extends StatelessWidget {
   const SearchReleasePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<LatestReleaseCubit>(
+      create: (context) => LatestReleaseCubit(),
+      child: const SearchReleaseView(),
+    );
+  }
+}
+
+class SearchReleaseView extends StatelessWidget {
+  const SearchReleaseView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +27,7 @@ class SearchReleasePage extends StatelessWidget {
       body: BlocListener<LatestReleaseCubit, LatestReleaseState>(
         listener: (context, state) {
           if (state.release != null) {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (newContext) => BlocProvider<LatestReleaseCubit>.value(
-                  value: context.read<LatestReleaseCubit>(),
-                  child: ReleaseDetailsPage(release: state.release!),
-                ),
-              ),
-            );
+            goto(context, ReleaseDetailsPage(release: state.release!));
           }
         },
         child: const SingleChildScrollView(
@@ -113,9 +118,10 @@ class _UrlInputFormState extends State<_UrlInputForm> {
           ),
           const SizedBox(height: 16),
 
-          ElevatedButton(
+          TextButton.icon(
             onPressed: _fetchRelease,
-            child: const Text('Fetch Latest Release'),
+            label: const Text('Fetch Latest Release'),
+            icon: const Icon(Icons.search),
           ),
           if (state.error != null) ...[
             const SizedBox(height: 16),

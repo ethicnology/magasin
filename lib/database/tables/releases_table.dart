@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:drift/drift.dart';
 import 'package:magasin/database/database.dart';
-import 'package:magasin/features/fetch_latest_release/domain/entities/asset_entity.dart';
-import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
-import 'package:magasin/features/fetch_latest_release/domain/entities/user_entity.dart';
+import 'package:magasin/shared/domain/entities/asset_entity.dart';
+import 'package:magasin/shared/domain/entities/release_entity.dart';
+import 'package:magasin/shared/domain/entities/user_entity.dart';
 
 @DataClassName('ReleaseRow')
 class Releases extends Table {

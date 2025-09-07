@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:flutter/material.dart';
 
 class UriMapper extends SimpleMapper<Uri> {
   const UriMapper();
@@ -22,4 +23,12 @@ extension UriExtensions on Uri {
   }
 
   return (owner: pathSegments[0], repo: pathSegments[1]);
+}
+
+void goto(BuildContext context, Widget page, {bool canPop = true}) {
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(builder: (context) => page),
+    (route) => canPop,
+  );
 }

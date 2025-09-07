@@ -1,12 +1,12 @@
-import 'package:magasin/features/fetch_latest_release/domain/entities/release_entity.dart';
-import 'package:magasin/features/fetch_latest_release/domain/repositories/release_repository.dart';
+import 'package:magasin/shared/domain/entities/release_entity.dart';
+import 'package:magasin/shared/domain/repositories/release_repository.dart';
 
 class GetLatestReleaseUseCase {
-  final ReleaseRepository _repository;
+  final _releaseRepository = ReleaseRepository();
 
-  GetLatestReleaseUseCase(this._repository);
+  GetLatestReleaseUseCase();
 
   Future<ReleaseEntity> call({required Uri url}) async {
-    return await _repository.getLatestRelease(url);
+    return await _releaseRepository.getLatestRelease(url);
   }
 }

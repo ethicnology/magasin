@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:magasin/features/fetch_latest_release/data/models/gitlab_release_model.dart';
+import 'package:magasin/shared/data/models/gitlab_release_model.dart';
 
 class GitLabDatasource {
   final http.Client client;
