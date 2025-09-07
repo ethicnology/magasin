@@ -51,6 +51,7 @@ dependencies:
   sqlcipher_flutter_libs: ^0.6.8
   sqlite3: ^2.9.0
   path: ^1.9.1
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
