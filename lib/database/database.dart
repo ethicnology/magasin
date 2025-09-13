@@ -13,14 +13,14 @@ part 'database.g.dart';
 
 late MyEncryptedDatabase database;
 
-void initDatabase() => database = MyEncryptedDatabase();
-
 // Useless password for db encryption until I decide to implement properly this feature
 const _encryptionPassword = 'dummy_password_on_purpose';
 
 @DriftDatabase(tables: [Releases])
 class MyEncryptedDatabase extends _$MyEncryptedDatabase {
   MyEncryptedDatabase() : super(_openDatabase());
+
+  static MyEncryptedDatabase init() => database = MyEncryptedDatabase();
 
   @override
   int get schemaVersion => 1;
