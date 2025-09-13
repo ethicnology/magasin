@@ -74,7 +74,7 @@ class _UrlInputFormState extends State<_UrlInputForm> {
         if (!urlText.contains('://')) {
           _urlController.text = 'https://$urlText';
         }
-        var uri = Uri.parse(_urlController.text);
+        var uri = UriEntity.parse(_urlController.text);
 
         context.read<LatestReleaseCubit>().fetchRelease(uri);
       } catch (e) {
@@ -109,7 +109,7 @@ class _UrlInputFormState extends State<_UrlInputForm> {
               if (value == null || value.isEmpty) {
                 return 'Please enter a repository URL';
               }
-              final uri = Uri.parse(value);
+              final uri = UriEntity.parse(value);
               if (uri.isGitHub && uri.isGitLab) {
                 return 'Please enter a valid Github or GitLab URL';
               }

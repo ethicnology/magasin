@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:magasin/utils.dart';
 import '../models/github_release_model.dart';
 import '../models/github_tag_reference_model.dart';
 
@@ -13,7 +14,7 @@ class GitHubDatasource {
     final endpoint = '$baseUrl/repos/$owner/$repo/releases/latest';
 
     final response = await client.get(
-      Uri.parse(endpoint),
+      UriEntity.parse(endpoint),
       headers: {
         'Accept': 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
@@ -47,7 +48,7 @@ class GitHubDatasource {
     final endpoint = '$baseUrl/repos/$owner/$repo/git/ref/tags/$tagName';
 
     final response = await client.get(
-      Uri.parse(endpoint),
+      UriEntity.parse(endpoint),
       headers: {
         'Accept': 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',

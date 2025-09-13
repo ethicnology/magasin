@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magasin/errors.dart';
 import 'package:magasin/shared/domain/entities/asset_entity.dart';
 import 'package:magasin/shared/domain/entities/user_entity.dart';
+import 'package:magasin/utils.dart';
 
 enum ReleaseProvider { github, gitlab }
 
@@ -24,7 +25,7 @@ extension ReleaseProviderExtension on ReleaseProvider {
     }
   }
 
-  Uri get url => Uri.https('$name.com');
+  UriEntity get url => UriEntity.https('$name.com');
 }
 
 class ReleaseEntity {
@@ -33,7 +34,7 @@ class ReleaseEntity {
   final ReleaseProvider platform;
   final String tag;
   final String commit;
-  final Uri url;
+  final UriEntity url;
 
   final String name;
   final String description;

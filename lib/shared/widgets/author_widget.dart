@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:magasin/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthorWidget extends StatelessWidget {
   final String username;
-  final Uri profileUrl;
+  final UriEntity profileUrl;
   const AuthorWidget({
     super.key,
     required this.username,

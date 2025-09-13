@@ -1,12 +1,19 @@
 import 'package:magasin/shared/domain/entities/asset_entity.dart';
-import 'package:magasin/shared/domain/repositories/release_repository.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DownloadReleaseAssetUseCase {
-  final _repository = ReleaseRepository();
-
   DownloadReleaseAssetUseCase();
 
   Future<void> call({required AssetEntity asset}) async {
-    return await _repository.downloadAsset(asset);
+    try {
+      final uri = asset.url;
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        throw Exception('Could not launch download URL');
+      }
+    } catch (e) {
+      throw Exception('Failed to download asset: $e');
+    }
   }
 }

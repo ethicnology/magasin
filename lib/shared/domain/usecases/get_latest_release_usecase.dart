@@ -1,12 +1,21 @@
 import 'package:magasin/shared/domain/entities/release_entity.dart';
-import 'package:magasin/shared/domain/repositories/release_repository.dart';
+import 'package:magasin/shared/domain/repositories/github_repository.dart';
+import 'package:magasin/shared/domain/repositories/gitlab_repository.dart';
+import 'package:magasin/utils.dart';
 
 class GetLatestReleaseUseCase {
-  final _releaseRepository = ReleaseRepository();
+  final _githubRepository = GithubRepository();
+  final _gitlabRepository = GitlabRepository();
 
   GetLatestReleaseUseCase();
 
-  Future<ReleaseEntity> call({required Uri url}) async {
-    return await _releaseRepository.getLatestRelease(url);
+  Future<ReleaseEntity> call({required UriEntity url}) async {
+    if (url.isGitHub) {
+      return await _githubRepository.getLatestRelease(url);
+    } else if (url.isGitLab) {
+      return await _gitlabRepository.getLatestRelease(url);
+    } else {
+      throw Exception('Invalid URL');
+    }
   }
 }

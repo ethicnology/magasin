@@ -12,7 +12,7 @@ class LatestReleaseCubit extends Cubit<LatestReleaseState> {
 
   void reset() => emit(const LatestReleaseState());
 
-  Future<void> fetchRelease(Uri url) async {
+  Future<void> fetchRelease(UriEntity url) async {
     if (!url.isGitHub && !url.isGitLab) {
       emit(
         state.copyWith(

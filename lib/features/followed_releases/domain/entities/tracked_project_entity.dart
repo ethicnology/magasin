@@ -1,5 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:magasin/shared/domain/entities/release_entity.dart';
+import 'package:magasin/utils.dart';
 
 part 'tracked_project_entity.mapper.dart';
 
@@ -21,5 +22,5 @@ class TrackedProjectEntity with TrackedProjectEntityMappable {
 
   String get key => '$platform/$organization/$project';
 
-  Uri get url => platform.url.replace(path: '/$organization/$project');
+  UriEntity get url => platform.url.replace(path: '/$organization/$project');
 }

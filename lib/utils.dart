@@ -11,7 +11,9 @@ class UriMapper extends SimpleMapper<Uri> {
   dynamic encode(Uri self) => self.toString();
 }
 
-extension UriExtensions on Uri {
+typedef UriEntity = Uri;
+
+extension UriExtensions on UriEntity {
   bool get isGitHub => host == 'github.com';
   bool get isGitLab => host == 'gitlab.com';
 }

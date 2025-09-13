@@ -1,8 +1,10 @@
+import 'package:magasin/utils.dart';
+
 class UserEntity {
   final int id;
   final String username;
-  final Uri avatarUrl;
-  final Uri profileUrl;
+  final UriEntity avatarUrl;
+  final UriEntity profileUrl;
 
   const UserEntity({
     required this.id,

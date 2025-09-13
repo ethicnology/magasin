@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:magasin/utils.dart';
 
 part 'github_tag_reference_model.mapper.dart';
 
@@ -6,7 +7,7 @@ part 'github_tag_reference_model.mapper.dart';
 class GithubTagReferenceModel with GithubTagReferenceModelMappable {
   final String ref;
   final String nodeId;
-  final Uri url;
+  final UriEntity url;
   final GitObject object;
 
   GithubTagReferenceModel({
@@ -33,7 +34,7 @@ class GithubTagReferenceModel with GithubTagReferenceModelMappable {
 class GitObject with GitObjectMappable {
   final String sha;
   final String type;
-  final Uri url;
+  final UriEntity url;
 
   GitObject({required this.sha, required this.type, required this.url});
 }
