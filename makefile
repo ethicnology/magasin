@@ -1,4 +1,4 @@
-.PHONY: all setup clean dependencies build-runner drift-migrations ios-pod-update fvm-check
+.PHONY: all setup clean dependencies runner drift-migrations ios-pod-update fvm-check
 
 fvm-install:
 	@echo "🔍 Installing FVM"
@@ -14,9 +14,9 @@ fvm-check:
 	@echo "✅ FVM is installed"
 	@fvm install
 
-init: fvm-install refresh
+init: fvm-install clean dependencies runner
 
-refresh: fvm-check clean dependencies build-runner ios-pod-update
+refresh: fvm-check clean dependencies runner ios-pod-update
 	@echo "🚀 Ready to go!"
 
 clean:
