@@ -30,8 +30,25 @@ jobs:
         name: ${{ env.APP_NAME }}-ios.ipa
         path: Runner.ipa
 
+  macos:
+    runs-on: macos-15
+    
+    steps:
+    - uses: actions/checkout@v5
+    - run: make init
+    - run: make macos-pod-update
+
+    - run: fvm flutter config --enable-macos-desktop
+    - run: fvm flutter build macos --release
+   
+    - name: Upload macOS artifact
+      uses: actions/upload-artifact@v4
+      with:
+          name: ${{ env.APP_NAME }}-macos.app
+          path: build/macos/Build/Products/Release/${{ env.APP_NAME }}.app
+
   android:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v5
@@ -62,87 +79,56 @@ jobs:
           name: ${{ env.APP_NAME }}-x86_64.apk
           path: build/app/outputs/flutter-apk/app-x86_64-release.apk
 
+  linux-x64:
+    runs-on: ubuntu-24.04
+    
+    steps:
+    - uses: actions/checkout@v5
+    - run: make init
+    - run: sudo apt-get install build-essential libgtk-3-dev
 
-  # linux:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: 'stable'
-  #     - run: |
-  #           sudo apt-get update -y
-  #           sudo apt-get install -y ninja-build libgtk-3-dev
-  #     - run: flutter config --enable-linux-desktop
-  #     - run: flutter build linux --release
-  #     - name: Upload artifact 
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: linux_x64_${{ env.APP_NAME }}
-  #         path: build/linux/x64/release/bundle
+    - run: fvm flutter config --enable-linux-desktop
+    - run: fvm flutter build linux --release --target-platform=linux-x64
 
-  # windows:
-  #   runs-on: windows-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: 'stable'
-  #     - run: flutter config --enable-windows-desktop
-  #     - run: flutter build windows --release
-  #     - name: Upload artifact 
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: windows_x64_${{ env.APP_NAME }}
-  #         path: build\windows\x64\runner\Release
+    - name: Upload Linux x64 artifact
+      uses: actions/upload-artifact@v4
+      with:
+          name: ${{ env.APP_NAME }}-linux-x64
+          path: build/linux/x64/release/bundle/${{ env.APP_NAME }}
 
-  # ios:
-  #   runs-on: macos-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - uses: subosito/flutter-action@v2
-  #     with:
-  #       channel: 'stable'
-  #       architecture: x64
-  #   - run: flutter pub get
-  #   - name: Build no-codesign release
-  #     run: flutter build ios --release --no-codesign
-  #   - name: Upload artifact
-  #     uses: actions/upload-artifact@v4
-  #     with:
-  #       name: ios_${{ env.APP_NAME }}
-  #       path: build/ios/iphoneos/Runner.app
+  linux-arm64:
+    runs-on: ubuntu-24.04-arm
+    
+    steps:
+    - uses: actions/checkout@v5
+    - run: make init
+    - run: sudo apt-get install build-essential libgtk-3-dev
 
-  # macos:
-  #   runs-on: macos-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: 'stable'
-  #         architecture: x64
-  #     - run: flutter config --enable-macos-desktop
-  #     - run: flutter build macos --release
-  #     - name: Create DMG
-  #       run: |
-  #         hdiutil create -format UDZO -srcfolder build/macos/Build/Products/Release/${{ env.APP_NAME }}.app build/macos/${{ env.APP_NAME }}.dmg
-  #     - name: Upload artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: macos_${{ env.APP_NAME }}
-  #         path: build/macos/${{ env.APP_NAME }}.dmg
+    - run: fvm flutter config --enable-linux-desktop
+    - run: fvm flutter build linux --release --target-platform=linux-arm64
 
-  # macos_arm:
-  #   runs-on: macos-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         channel: 'stable'
-  #         architecture: arm64
-  #     - run: flutter config --enable-macos-desktop
-  #     - run: flutter build macos --release
-  #     - uses: actions/upload-artifact@v4
-  #       with:
-  #         name: macos_arm64_${{ env.APP_NAME }}
-  #         path: build/macos/Build/Products/Release/${{ env.APP_NAME }}.app/Contents
+    - name: Upload Linux arm64 artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.APP_NAME }}-linux-arm64
+        path: build/linux/arm64/release/bundle/${{ env.APP_NAME }}
+
+  windows:
+    runs-on: windows-2025
+    
+    steps:
+    - uses: actions/checkout@v5
+
+    - run: choco install fvm
+    - run: fvm install
+    - run: fvm flutter pub get
+    - run: fvm dart run build_runner build --delete-conflicting-outputs
+    
+    - run: fvm flutter config --enable-windows-desktop
+    - run: fvm flutter build windows --release
+
+    - name: Upload Windows artifact
+      uses: actions/upload-artifact@v4
+      with:
+          name: ${{ env.APP_NAME }}-windows-x64
+          path: build\windows\x64\runner\Release

@@ -1,4 +1,4 @@
-.PHONY: all setup clean dependencies runner drift-migrations ios-pod-update fvm-check
+.PHONY: fvm-install fvm-check init refresh clean dependencies runner drift-migrations ios-pod-update macos-pod-update
 
 fvm-install:
 	@echo "🔍 Installing FVM"
@@ -16,7 +16,7 @@ fvm-check:
 
 init: fvm-install clean dependencies runner
 
-refresh: fvm-check clean dependencies runner ios-pod-update
+refresh: fvm-check clean dependencies runner ios-pod-update macos-pod-update
 	@echo "🚀 Ready to go!"
 
 clean:
@@ -39,3 +39,8 @@ ios-pod-update:
 	@echo " Fetching dependencies"
 	@fvm flutter precache --ios
 	@cd ios && pod install --repo-update && cd -
+
+macos-pod-update:
+	@echo " Fetching dependencies"
+	@fvm flutter precache --macos
+	@cd macos && pod install --repo-update && cd -
