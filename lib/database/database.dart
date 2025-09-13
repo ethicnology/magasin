@@ -27,7 +27,14 @@ class MyEncryptedDatabase extends _$MyEncryptedDatabase {
 
   @override
   MigrationStrategy get migration {
-    return MigrationStrategy(beforeOpen: (details) async {});
+    return MigrationStrategy(
+      beforeOpen: (details) async {},
+      onCreate: (Migrator m) async {
+        await m.createAll();
+
+        // seed database
+      },
+    );
   }
 }
 
