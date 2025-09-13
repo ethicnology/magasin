@@ -13,7 +13,7 @@ class LatestReleaseCubit extends Cubit<LatestReleaseState> {
   void reset() => emit(const LatestReleaseState());
 
   Future<void> fetchRelease(Uri url) async {
-    if (url.isGitHub && url.isGitLab) {
+    if (!url.isGitHub && !url.isGitLab) {
       emit(
         state.copyWith(
           error: AppError('Please enter a valid Github or GitLab URL'),
