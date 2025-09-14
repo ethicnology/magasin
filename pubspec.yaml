@@ -52,6 +52,7 @@ dependencies:
   sqlite3: ^2.9.0
   path: ^1.9.1
   flutter_launcher_icons: ^0.14.4
+  logging_colorful: ^1.3.0
 
 dev_dependencies:
   flutter_test:

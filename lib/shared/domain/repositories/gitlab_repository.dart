@@ -1,3 +1,4 @@
+import 'package:magasin/errors.dart';
 import 'package:magasin/shared/domain/entities/release_entity.dart';
 import 'package:magasin/shared/data/datasources/gitlab_datasource.dart';
 import 'package:magasin/utils.dart';
@@ -17,7 +18,7 @@ class GitlabRepository {
       final release = model.toEntity();
       return release;
     } catch (e) {
-      throw Exception('Failed to get latest release: $e');
+      throw AppError('Failed to get latest release from $url');
     }
   }
 }
