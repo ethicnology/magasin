@@ -1,5 +1,5 @@
-import 'package:magasin/shared/domain/entities/release_entity.dart';
-import 'package:magasin/shared/domain/repositories/db_release_repository.dart';
+import 'package:Magasin/shared/domain/entities/release_entity.dart';
+import 'package:Magasin/shared/domain/repositories/db_release_repository.dart';
 
 class GetAllReleasesUsecase {
   final _dbReleaseRepository = DbReleaseRepository();

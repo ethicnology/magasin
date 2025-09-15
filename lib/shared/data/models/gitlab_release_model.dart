@@ -1,7 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:magasin/shared/domain/entities/asset_entity.dart';
-import 'package:magasin/shared/domain/entities/release_entity.dart';
-import 'package:magasin/shared/domain/entities/user_entity.dart';
+import 'package:Magasin/shared/domain/entities/asset_entity.dart';
+import 'package:Magasin/shared/domain/entities/release_entity.dart';
+import 'package:Magasin/shared/domain/entities/user_entity.dart';
 
 part 'gitlab_release_model.mapper.dart';
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:magasin/features/show_release/release_details_page.dart';
+import 'package:Magasin/features/show_release/release_details_page.dart';
 
-import 'package:magasin/features/followed_releases/presentation/cubit/cubit.dart';
-import 'package:magasin/features/followed_releases/presentation/cubit/state.dart';
-import 'package:magasin/features/followed_releases/presentation/tracked_project_card.dart';
-import 'package:magasin/features/fetch_latest_release/presentation/search_release_page.dart';
-import 'package:magasin/utils.dart';
+import 'package:Magasin/features/followed_releases/presentation/cubit/cubit.dart';
+import 'package:Magasin/features/followed_releases/presentation/cubit/state.dart';
+import 'package:Magasin/features/followed_releases/presentation/tracked_project_card.dart';
+import 'package:Magasin/features/fetch_latest_release/presentation/search_release_page.dart';
+import 'package:Magasin/utils.dart';
 
 class FollowedReleasesPage extends StatelessWidget {
   const FollowedReleasesPage({super.key});

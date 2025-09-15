@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/app.dart';
-import 'package:magasin/features/followed_releases/presentation/followed_releases_page.dart';
+import 'package:Magasin/app.dart';
+import 'package:Magasin/features/followed_releases/presentation/followed_releases_page.dart';
 
 import 'theme.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/features/fetch_latest_release/utils/supported_platforms_enum.dart';
+import 'package:Magasin/features/fetch_latest_release/utils/supported_platforms_enum.dart';
 
 extension StringAssetExtensions on String {
   IconData get assetIcon {

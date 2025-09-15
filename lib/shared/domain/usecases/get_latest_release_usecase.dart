@@ -1,7 +1,7 @@
-import 'package:magasin/shared/domain/entities/release_entity.dart';
-import 'package:magasin/shared/domain/repositories/github_repository.dart';
-import 'package:magasin/shared/domain/repositories/gitlab_repository.dart';
-import 'package:magasin/utils.dart';
+import 'package:Magasin/shared/domain/entities/release_entity.dart';
+import 'package:Magasin/shared/domain/repositories/github_repository.dart';
+import 'package:Magasin/shared/domain/repositories/gitlab_repository.dart';
+import 'package:Magasin/utils.dart';
 
 class GetLatestReleaseUseCase {
   final _githubRepository = GithubRepository();

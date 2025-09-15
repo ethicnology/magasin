@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/shared/domain/entities/release_entity.dart';
-import 'package:magasin/features/followed_releases/domain/entities/tracked_project_entity.dart';
-import 'package:magasin/theme.dart';
+import 'package:Magasin/shared/domain/entities/release_entity.dart';
+import 'package:Magasin/features/followed_releases/domain/entities/tracked_project_entity.dart';
+import 'package:Magasin/theme.dart';
 
 class TrackedProjectCard extends StatelessWidget {
   final TrackedProjectEntity project;

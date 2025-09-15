@@ -1,4 +1,4 @@
-import 'package:magasin/shared/domain/entities/asset_entity.dart';
+import 'package:Magasin/shared/domain/entities/asset_entity.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DownloadReleaseAssetUseCase {

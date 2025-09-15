@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:magasin/utils.dart';
+import 'package:Magasin/utils.dart';
 import '../models/github_release_model.dart';
 import '../models/github_tag_reference_model.dart';
 

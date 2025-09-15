@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:magasin/errors.dart';
-import 'package:magasin/shared/domain/usecases/get_latest_release_usecase.dart';
-import 'package:magasin/utils.dart';
+import 'package:Magasin/errors.dart';
+import 'package:Magasin/shared/domain/usecases/get_latest_release_usecase.dart';
+import 'package:Magasin/utils.dart';
 
 import 'state.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:magasin/errors.dart';
-import 'package:magasin/features/followed_releases/domain/entities/tracked_project_entity.dart';
-import 'package:magasin/features/followed_releases/domain/usecases/get_tracked_projects_usecase.dart';
-import 'package:magasin/features/followed_releases/domain/usecases/unfollow_project_usecase.dart';
-import 'package:magasin/shared/domain/usecases/get_latest_release_usecase.dart';
+import 'package:Magasin/errors.dart';
+import 'package:Magasin/features/followed_releases/domain/entities/tracked_project_entity.dart';
+import 'package:Magasin/features/followed_releases/domain/usecases/get_tracked_projects_usecase.dart';
+import 'package:Magasin/features/followed_releases/domain/usecases/unfollow_project_usecase.dart';
+import 'package:Magasin/shared/domain/usecases/get_latest_release_usecase.dart';
 
 import 'state.dart';
 

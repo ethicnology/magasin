@@ -1,5 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:magasin/utils.dart';
+import 'package:Magasin/utils.dart';
 
 part 'asset_entity.mapper.dart';
 

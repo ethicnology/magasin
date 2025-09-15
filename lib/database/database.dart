@@ -7,7 +7,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlcipher_flutter_libs/sqlcipher_flutter_libs.dart';
 import 'package:sqlite3/open.dart';
-import 'package:magasin/database/tables/releases_table.dart';
+import 'package:Magasin/database/tables/releases_table.dart';
 
 part 'database.g.dart';
 
@@ -43,7 +43,7 @@ QueryExecutor _openDatabase() {
     final path = await getApplicationDocumentsDirectory();
 
     return NativeDatabase.createInBackground(
-      File(p.join(path.path, 'magasin.database.enc')),
+      File(p.join(path.path, 'Magasin.database.enc')),
       isolateSetup: () async {
         open
           ..overrideFor(OperatingSystem.android, openCipherOnAndroid)

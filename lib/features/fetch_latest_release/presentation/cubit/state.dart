@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:magasin/errors.dart';
-import 'package:magasin/shared/domain/entities/release_entity.dart';
+import 'package:Magasin/errors.dart';
+import 'package:Magasin/shared/domain/entities/release_entity.dart';
 
 part 'state.mapper.dart';
 

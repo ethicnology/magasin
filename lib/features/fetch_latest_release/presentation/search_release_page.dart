@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:magasin/utils.dart';
+import 'package:Magasin/utils.dart';
 import 'cubit/cubit.dart';
 import 'cubit/state.dart';
 import '../../show_release/release_details_page.dart';

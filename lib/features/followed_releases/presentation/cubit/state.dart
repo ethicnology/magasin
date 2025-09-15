@@ -1,6 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:magasin/errors.dart';
-import 'package:magasin/features/followed_releases/domain/entities/tracked_project_entity.dart';
+import 'package:Magasin/errors.dart';
+import 'package:Magasin/features/followed_releases/domain/entities/tracked_project_entity.dart';
 
 part 'state.mapper.dart';
 

@@ -1,4 +1,4 @@
-import 'package:magasin/utils.dart';
+import 'package:Magasin/utils.dart';
 
 class UserEntity {
   final int id;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/features/fetch_latest_release/utils/supported_platforms_enum.dart';
-import 'package:magasin/shared/domain/entities/asset_entity.dart';
-import 'package:magasin/theme.dart';
+import 'package:Magasin/features/fetch_latest_release/utils/supported_platforms_enum.dart';
+import 'package:Magasin/shared/domain/entities/asset_entity.dart';
+import 'package:Magasin/theme.dart';
 import '../../fetch_latest_release/utils/platform_utils.dart';
 
 class AssetsList extends StatelessWidget {

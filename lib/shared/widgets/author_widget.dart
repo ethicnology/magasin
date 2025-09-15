@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/utils.dart';
+import 'package:Magasin/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthorWidget extends StatelessWidget {

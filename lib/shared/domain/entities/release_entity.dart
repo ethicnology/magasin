@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/errors.dart';
-import 'package:magasin/shared/domain/entities/asset_entity.dart';
-import 'package:magasin/shared/domain/entities/user_entity.dart';
-import 'package:magasin/utils.dart';
+import 'package:Magasin/errors.dart';
+import 'package:Magasin/shared/domain/entities/asset_entity.dart';
+import 'package:Magasin/shared/domain/entities/user_entity.dart';
+import 'package:Magasin/utils.dart';
 
 enum ReleaseProvider { github, gitlab }
 

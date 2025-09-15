@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:magasin/shared/domain/entities/release_entity.dart';
-import 'package:magasin/shared/widgets/author_widget.dart';
-import 'package:magasin/theme.dart';
+import 'package:Magasin/shared/domain/entities/release_entity.dart';
+import 'package:Magasin/shared/widgets/author_widget.dart';
+import 'package:Magasin/theme.dart';
 
 class ReleaseInfoCard extends StatelessWidget {
   final ReleaseEntity release;

@@ -1,6 +1,6 @@
 {
-    "name": "magasin",
-    "short_name": "magasin",
+    "name": "Magasin",
+    "short_name": "Magasin",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#hexcode",

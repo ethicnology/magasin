@@ -1,7 +1,7 @@
-import 'package:magasin/errors.dart';
-import 'package:magasin/shared/domain/entities/release_entity.dart';
-import 'package:magasin/shared/data/datasources/github_datasource.dart';
-import 'package:magasin/utils.dart';
+import 'package:Magasin/errors.dart';
+import 'package:Magasin/shared/domain/entities/release_entity.dart';
+import 'package:Magasin/shared/data/datasources/github_datasource.dart';
+import 'package:Magasin/utils.dart';
 
 class GithubRepository {
   final _githubDatasource = GitHubDatasource();

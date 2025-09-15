@@ -1,5 +1,5 @@
-import 'package:magasin/features/followed_releases/domain/entities/tracked_project_entity.dart';
-import 'package:magasin/shared/domain/repositories/db_release_repository.dart';
+import 'package:Magasin/features/followed_releases/domain/entities/tracked_project_entity.dart';
+import 'package:Magasin/shared/domain/repositories/db_release_repository.dart';
 
 class GetTrackedProjectsUseCase {
   final _dbReleaseRepository = DbReleaseRepository();

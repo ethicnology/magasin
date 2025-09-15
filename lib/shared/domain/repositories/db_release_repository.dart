@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:magasin/database/database.dart';
-import 'package:magasin/database/tables/releases_table.dart';
-import 'package:magasin/shared/domain/entities/release_entity.dart';
+import 'package:Magasin/database/database.dart';
+import 'package:Magasin/database/tables/releases_table.dart';
+import 'package:Magasin/shared/domain/entities/release_entity.dart';
 
 class DbReleaseRepository {
   DbReleaseRepository();
