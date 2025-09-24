@@ -94,7 +94,7 @@ class Asset with AssetMappable {
   final String contentType;
   final String state;
   final int size;
-  final String digest;
+  final String? digest;
   final int downloadCount;
   final DateTime createdAt;
   final DateTime updatedAt;
