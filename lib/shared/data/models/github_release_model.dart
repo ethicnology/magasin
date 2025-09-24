@@ -16,7 +16,7 @@ class GithubReleaseModel with GithubReleaseModelMappable {
   final String nodeId;
   final String tagName;
   final String targetCommitish;
-  final String name;
+  final String? name;
   final bool draft;
   final bool immutable;
   final bool prerelease;
@@ -64,7 +64,7 @@ class GithubReleaseModel with GithubReleaseModelMappable {
 
     return ReleaseEntity(
       platform: ReleaseProvider.github,
-      name: name,
+      name: name ?? tagName,
       tag: tagName,
       description: body,
       publishedAt: publishedAt,

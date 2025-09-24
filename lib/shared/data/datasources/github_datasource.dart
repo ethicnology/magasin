@@ -37,7 +37,30 @@ class GitHubDatasource {
     String tagName,
   ) async {
     final tagReference = await getTagReference(owner, repo, tagName);
-    return tagReference.getCommitHash();
+    if (tagReference.object.type == 'tag') {
+      return await _fetchCommitFromTagObject(
+        tagReference.object.url.toString(),
+      );
+    } else if (tagReference.object.type == 'commit') {
+      return tagReference.object.sha;
+    } else {
+      throw Exception('Invalid tag type: ${tagReference.object.type}');
+    }
+  }
+
+  Future<String> _fetchCommitFromTagObject(String tagUrl) async {
+    final endpoint = UriEntity.parse(tagUrl);
+    final response = await client.get(endpoint);
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      if (json['object']['type'] == 'commit') {
+        return json['object']['sha'] as String;
+      } else {
+        throw Exception('Invalid tag type: ${json['object']['type']}');
+      }
+    } else {
+      throw Exception('Failed to fetch commit: ${response.statusCode}');
+    }
   }
 
   Future<GithubTagReferenceModel> getTagReference(
@@ -46,14 +69,7 @@ class GitHubDatasource {
     String tagName,
   ) async {
     final endpoint = '$baseUrl/repos/$owner/$repo/git/ref/tags/$tagName';
-
-    final response = await client.get(
-      UriEntity.parse(endpoint),
-      headers: {
-        'Accept': 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-      },
-    );
+    final response = await client.get(UriEntity.parse(endpoint));
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as Map<String, dynamic>;
