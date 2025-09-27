@@ -30,8 +30,6 @@ class FollowedReleasesCubit extends Cubit<FollowedReleasesState> {
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: AppError(e.toString())));
     }
-
-    getLatestReleases();
   }
 
   Future<void> getLatestReleases() async {

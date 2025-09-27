@@ -63,38 +63,41 @@ class FollowedReleasesView extends StatelessWidget {
           }
 
           if (state.trackedProjects.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.inbox_outlined,
-                    size: 64,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'No followed projects',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Start following projects by searching for releases',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  const SizedBox(height: 24),
-                  TextButton.icon(
-                    onPressed: () => goto(context, const SearchReleasePage()),
-                    icon: const Icon(Icons.search),
-                    label: const Text('Search Releases'),
-                  ),
-                ],
+            return RefreshIndicator(
+              onRefresh: cubit.getLatestReleases,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.inbox_outlined,
+                      size: 64,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'No followed projects',
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Start following projects by searching for releases',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    const SizedBox(height: 24),
+                    TextButton.icon(
+                      onPressed: () => goto(context, const SearchReleasePage()),
+                      icon: const Icon(Icons.search),
+                      label: const Text('Search Releases'),
+                    ),
+                  ],
+                ),
               ),
             );
           }
 
           return RefreshIndicator(
-            onRefresh: cubit.loadTrackedProjects,
+            onRefresh: cubit.getLatestReleases,
             child: ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: state.trackedProjects.length,
