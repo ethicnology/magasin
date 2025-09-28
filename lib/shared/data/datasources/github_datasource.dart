@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:Magasin/errors.dart';
 import 'package:Magasin/utils.dart';
 import '../models/github_release_model.dart';
 import '../models/github_tag_reference_model.dart';
@@ -25,9 +26,13 @@ class GitHubDatasource {
       final json = jsonDecode(response.body) as Map<String, dynamic>;
       return GithubReleaseModel.fromMap(json);
     } else if (response.statusCode == 404) {
-      throw Exception('Repository not found or no releases available');
+      throw RepoNotFoundError('Repository not found or no releases available');
+    } else if (response.statusCode == 403 || response.statusCode == 429) {
+      throw RateLimitError(
+        'GitHub API rate limit exceeded. Please try again later.',
+      );
     } else {
-      throw Exception('Failed to fetch release: ${response.statusCode}');
+      throw AppError('Failed to fetch release: ${response.statusCode}');
     }
   }
 
@@ -44,7 +49,7 @@ class GitHubDatasource {
     } else if (tagReference.object.type == 'commit') {
       return tagReference.object.sha;
     } else {
-      throw Exception('Invalid tag type: ${tagReference.object.type}');
+      throw AppError('Invalid tag type: ${tagReference.object.type}');
     }
   }
 
@@ -56,10 +61,14 @@ class GitHubDatasource {
       if (json['object']['type'] == 'commit') {
         return json['object']['sha'] as String;
       } else {
-        throw Exception('Invalid tag type: ${json['object']['type']}');
+        throw AppError('Invalid tag type: ${json['object']['type']}');
       }
+    } else if (response.statusCode == 403 || response.statusCode == 429) {
+      throw RateLimitError(
+        'GitHub API rate limit exceeded. Please try again later.',
+      );
     } else {
-      throw Exception('Failed to fetch commit: ${response.statusCode}');
+      throw AppError('Failed to fetch commit: ${response.statusCode}');
     }
   }
 
@@ -75,9 +84,13 @@ class GitHubDatasource {
       final json = jsonDecode(response.body) as Map<String, dynamic>;
       return GithubTagReferenceModel.fromMap(json);
     } else if (response.statusCode == 404) {
-      throw Exception('Tag not found: $tagName');
+      throw RepoNotFoundError('Tag not found: $tagName');
+    } else if (response.statusCode == 403 || response.statusCode == 429) {
+      throw RateLimitError(
+        'GitHub API rate limit exceeded. Please try again later.',
+      );
     } else {
-      throw Exception('Failed to fetch tag: ${response.statusCode}');
+      throw AppError('Failed to fetch tag: ${response.statusCode}');
     }
   }
 }

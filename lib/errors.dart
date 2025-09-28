@@ -6,3 +6,11 @@ class AppError implements Exception {
   @override
   String toString() => message;
 }
+
+class RateLimitError extends AppError {
+  RateLimitError(super.message);
+}
+
+class RepoNotFoundError extends AppError {
+  RepoNotFoundError(super.message);
+}

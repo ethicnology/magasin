@@ -27,8 +27,12 @@ class FollowedReleasesCubit extends Cubit<FollowedReleasesState> {
         projects.map((project) => MapEntry(project.key, project)),
       );
       emit(state.copyWith(trackedProjects: projectsMap, isLoading: false));
+    } on AppError catch (e) {
+      emit(state.copyWith(error: e));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: AppError(e.toString())));
+      emit(state.copyWith(error: AppError(e.toString())));
+    } finally {
+      emit(state.copyWith(isLoading: false));
     }
   }
 
@@ -52,6 +56,9 @@ class FollowedReleasesCubit extends Cubit<FollowedReleasesState> {
             ),
           );
         }
+      } on RateLimitError catch (e) {
+        emit(state.copyWith(error: e));
+        return;
       } catch (e) {
         emit(state.copyWith(error: AppError(e.toString())));
         continue;
@@ -68,6 +75,8 @@ class FollowedReleasesCubit extends Cubit<FollowedReleasesState> {
       );
 
       await loadTrackedProjects(); // reload
+    } on AppError catch (e) {
+      emit(state.copyWith(error: e));
     } catch (e) {
       emit(state.copyWith(error: AppError(e.toString())));
     }
